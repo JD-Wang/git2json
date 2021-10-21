@@ -1,9 +1,9 @@
-const parsers = require('./parsers');
+import parsers from './parsers'
 
 // Default fields
 // see https://git-scm.com/docs/pretty-formats for placeholder codes
 const defaultFields = {
-  refs: { value: '%d', parser: parsers.refs },
+  refs: { value: '%d', parser: parsers.parents },
   hash: { value: '%H' },
   hashAbbrev: { value: '%h' },
   tree: { value: '%T' },
@@ -13,6 +13,7 @@ const defaultFields = {
   'author.name': { value: '%an' },
   'author.email': { value: '%ae' },
   'author.timestamp': { value: '%at', parser: parsers.timestamp },
+  'author.date': { value: '%ad' },
   'committer.name': { value: '%cn' },
   'committer.email': { value: '%ce' },
   'committer.timestamp': { value: '%ct', parser: parsers.timestamp },
@@ -29,13 +30,19 @@ const defaultFields = {
  * @param {string} [options.path] - path of target git repo
  * @return {Promise}
  */
-function git2json({ fields = defaultFields, path = process.cwd(), paths = path, extraLogOptions = ["--all"] } = {}) {
+interface Params {
+  fields?: any,
+  path?: string,
+  paths?: string | string[],
+  extraLogOptions?: string[]
+}
+function run({ fields = defaultFields, path = process.cwd(), paths = path, extraLogOptions = ["--all"] }: Params = {}) {
   // this require can't be global for mocking issue
   const { spawn } = require('child_process');
-  const keys = Object.keys(fields);
-  const prettyKeys = keys.map(a => fields[a].value).join('%x00');
+  const keys: string[] = Object.keys(fields);
+  const prettyKeys = keys.map((a: string) => fields[a].value).join('%x00');
   paths = Array.isArray(paths) ? paths : [paths];
-  const args = paths.map(path => [
+  const args = paths.map((path: any) => [
     '-C',
     path,
     'log',
@@ -52,16 +59,16 @@ function git2json({ fields = defaultFields, path = process.cwd(), paths = path, 
           let stdout = '';
           const cp = spawn('git', args);
 
-          cp.stdout.on('data', data => {
+          cp.stdout.on('data', (data: string) => {
             stdout += data;
           });
 
-          cp.stderr.on('data', data => {
+          cp.stderr.on('data', (data: string) => {
             stderr += data;
           });
 
           cp.on('error', reject)
-            .on('close', code => {
+            .on('close', (code: number) => {
               if (code !== 0) {
                 reject(stderr);
               }
@@ -71,7 +78,7 @@ function git2json({ fields = defaultFields, path = process.cwd(), paths = path, 
 
               let json = data.filter((a, i) => i % 2).map((raw, k) => {
                 return Object.assign(
-                  raw.split('\u0000').reduce((mem, field, j) => {
+                  raw.split('\u0000').reduce((mem: any, field, j) => {
                     const value = fields[keys[j]].parser
                       ? fields[keys[j]].parser(field)
                       : field.trim();
@@ -90,9 +97,9 @@ function git2json({ fields = defaultFields, path = process.cwd(), paths = path, 
                     // Add parsed stats of each commit
                     stats: stats[k + 1]
                       .split('\n')
-                      .filter(a => a)
+                      .filter((a: string) => a)
                       .map(a => {
-                        let b = a.split('\t');
+                        let b: any = a.split('\t');
                         return {
                           additions: isNaN(b[0]) ? null : +b[0],
                           deletions: isNaN(b[1]) ? null : +b[1],
@@ -106,11 +113,12 @@ function git2json({ fields = defaultFields, path = process.cwd(), paths = path, 
             });
         })
     )
-  ).then(json => [].concat(...json));
+  ).then((item: any) => [].concat(...item));
 }
 
-module.exports = {
-  run: git2json,
+
+export default {
+  run,
   defaultFields,
-  parsers
-};
+  parsers,
+}

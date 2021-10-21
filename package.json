@@ -1,14 +1,11 @@
 {
-  "name": "@fabien0102/git2json",
-  "version": "1.4.0",
+  "name": "git-log-json",
+  "version": "1.4.1",
   "description": "Simple tool to get a JSON from your git log.",
-  "main": "src/git2json.js",
+  "main": "build/git2json.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/fabien0102/git2json.git"
-  },
-  "bin": {
-    "git2json": "bin/git2json"
+    "url": "git@github.com:JD-Wang/git2json.git"
   },
   "scripts": {
     "test": "jest",
@@ -27,9 +24,11 @@
       "html"
     ]
   },
-  "author": "fabien0102 <fabien0102@gmail.com>",
+  "types": "./build/git2json.d.ts",
+  "author": "JD-Wang <15180453160@163.com>",
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^16.11.1",
     "codeclimate-test-reporter": "^0.4.0",
     "jest": "18.1.0",
     "mock-spawn": "^0.2.6"
