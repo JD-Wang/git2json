@@ -1,6 +1,6 @@
 {
   "name": "git-log-json",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "Simple tool to get a JSON from your git log.",
   "main": "build/git2json.js",
   "repository": {
