@@ -9,7 +9,8 @@
   },
   "scripts": {
     "test": "jest",
-    "codeclimate": "codeclimate-test-reporter < coverage/lcov.info"
+    "codeclimate": "codeclimate-test-reporter < coverage/lcov.info",
+    "build": "tsc"
   },
   "keywords": [
     "git",
