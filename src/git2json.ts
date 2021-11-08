@@ -1,8 +1,8 @@
-import parsers from './parsers'
+import { parsers } from './parsers'
 
 // Default fields
 // see https://git-scm.com/docs/pretty-formats for placeholder codes
-const defaultFields = {
+export const defaultFields = {
   refs: { value: '%d', parser: parsers.parents },
   hash: { value: '%H' },
   hashAbbrev: { value: '%h' },
@@ -36,7 +36,7 @@ interface Params {
   paths?: string | string[],
   extraLogOptions?: string[]
 }
-function run({ fields = defaultFields, path = process.cwd(), paths = path, extraLogOptions = ["--all"] }: Params = {}) {
+export function run({ fields = defaultFields, path = process.cwd(), paths = path, extraLogOptions = ["--all"] }: Params = {}) {
   // this require can't be global for mocking issue
   const { spawn } = require('child_process');
   const keys: string[] = Object.keys(fields);
@@ -114,11 +114,4 @@ function run({ fields = defaultFields, path = process.cwd(), paths = path, extra
         })
     )
   ).then((item: any) => [].concat(...item));
-}
-
-
-export default {
-  run,
-  defaultFields,
-  parsers,
 }

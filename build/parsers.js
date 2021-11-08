@@ -9,7 +9,8 @@
 })(function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.default = {
+    exports.parsers = void 0;
+    exports.parsers = {
         /**
          * Transform git timestamp to unix timestamp
          */

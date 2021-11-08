@@ -1,4 +1,4 @@
-export default {
+export const parsers = {
   /**
    * Transform git timestamp to unix timestamp
    */

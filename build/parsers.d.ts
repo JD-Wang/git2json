@@ -1,4 +1,4 @@
-declare const _default: {
+export declare const parsers: {
     /**
      * Transform git timestamp to unix timestamp
      */
@@ -12,4 +12,3 @@ declare const _default: {
      */
     refs: (a: string) => string[];
 };
-export default _default;

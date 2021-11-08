@@ -1,6 +1,3 @@
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 (function (factory) {
     if (typeof module === "object" && typeof module.exports === "object") {
         var v = factory(require, exports);
@@ -12,29 +9,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 })(function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    const parsers_1 = __importDefault(require("./parsers"));
+    exports.run = exports.defaultFields = void 0;
+    const parsers_1 = require("./parsers");
     // Default fields
     // see https://git-scm.com/docs/pretty-formats for placeholder codes
-    const defaultFields = {
-        refs: { value: '%d', parser: parsers_1.default.parents },
+    exports.defaultFields = {
+        refs: { value: '%d', parser: parsers_1.parsers.parents },
         hash: { value: '%H' },
         hashAbbrev: { value: '%h' },
         tree: { value: '%T' },
         treeAbbrev: { value: '%t' },
-        parents: { value: '%P', parser: parsers_1.default.parents },
-        parentsAbbrev: { value: '%p', parser: parsers_1.default.parents },
+        parents: { value: '%P', parser: parsers_1.parsers.parents },
+        parentsAbbrev: { value: '%p', parser: parsers_1.parsers.parents },
         'author.name': { value: '%an' },
         'author.email': { value: '%ae' },
-        'author.timestamp': { value: '%at', parser: parsers_1.default.timestamp },
+        'author.timestamp': { value: '%at', parser: parsers_1.parsers.timestamp },
         'author.date': { value: '%ad' },
         'committer.name': { value: '%cn' },
         'committer.email': { value: '%ce' },
-        'committer.timestamp': { value: '%ct', parser: parsers_1.default.timestamp },
+        'committer.timestamp': { value: '%ct', parser: parsers_1.parsers.timestamp },
         subject: { value: '%s' },
         body: { value: '%b' },
         notes: { value: '%N' }
     };
-    function run({ fields = defaultFields, path = process.cwd(), paths = path, extraLogOptions = ["--all"] } = {}) {
+    function run({ fields = exports.defaultFields, path = process.cwd(), paths = path, extraLogOptions = ["--all"] } = {}) {
         // this require can't be global for mocking issue
         const { spawn } = require('child_process');
         const keys = Object.keys(fields);
@@ -100,9 +98,5 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
             });
         }))).then((item) => [].concat(...item));
     }
-    exports.default = {
-        run,
-        defaultFields,
-        parsers: parsers_1.default,
-    };
+    exports.run = run;
 });

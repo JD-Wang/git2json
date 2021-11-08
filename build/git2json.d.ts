@@ -1,3 +1,61 @@
+export declare const defaultFields: {
+    refs: {
+        value: string;
+        parser: (a: string) => string[];
+    };
+    hash: {
+        value: string;
+    };
+    hashAbbrev: {
+        value: string;
+    };
+    tree: {
+        value: string;
+    };
+    treeAbbrev: {
+        value: string;
+    };
+    parents: {
+        value: string;
+        parser: (a: string) => string[];
+    };
+    parentsAbbrev: {
+        value: string;
+        parser: (a: string) => string[];
+    };
+    'author.name': {
+        value: string;
+    };
+    'author.email': {
+        value: string;
+    };
+    'author.timestamp': {
+        value: string;
+        parser: (a: string) => number;
+    };
+    'author.date': {
+        value: string;
+    };
+    'committer.name': {
+        value: string;
+    };
+    'committer.email': {
+        value: string;
+    };
+    'committer.timestamp': {
+        value: string;
+        parser: (a: string) => number;
+    };
+    subject: {
+        value: string;
+    };
+    body: {
+        value: string;
+    };
+    notes: {
+        value: string;
+    };
+};
 /**
  * Execute git log on current folder and return a pretty object
  *
@@ -12,71 +70,5 @@ interface Params {
     paths?: string | string[];
     extraLogOptions?: string[];
 }
-declare function run({ fields, path, paths, extraLogOptions }?: Params): Promise<never[]>;
-declare const _default: {
-    run: typeof run;
-    defaultFields: {
-        refs: {
-            value: string;
-            parser: (a: string) => string[];
-        };
-        hash: {
-            value: string;
-        };
-        hashAbbrev: {
-            value: string;
-        };
-        tree: {
-            value: string;
-        };
-        treeAbbrev: {
-            value: string;
-        };
-        parents: {
-            value: string;
-            parser: (a: string) => string[];
-        };
-        parentsAbbrev: {
-            value: string;
-            parser: (a: string) => string[];
-        };
-        'author.name': {
-            value: string;
-        };
-        'author.email': {
-            value: string;
-        };
-        'author.timestamp': {
-            value: string;
-            parser: (a: string) => number;
-        };
-        'author.date': {
-            value: string;
-        };
-        'committer.name': {
-            value: string;
-        };
-        'committer.email': {
-            value: string;
-        };
-        'committer.timestamp': {
-            value: string;
-            parser: (a: string) => number;
-        };
-        subject: {
-            value: string;
-        };
-        body: {
-            value: string;
-        };
-        notes: {
-            value: string;
-        };
-    };
-    parsers: {
-        timestamp: (a: string) => number;
-        parents: (a: string) => string[];
-        refs: (a: string) => string[];
-    };
-};
-export default _default;
+export declare function run({ fields, path, paths, extraLogOptions }?: Params): Promise<never[]>;
+export {};
